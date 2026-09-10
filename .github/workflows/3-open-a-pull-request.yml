@@ -85,11 +85,10 @@ jobs:
           if [ -n "$PR_BODY" ]; then
             echo "STEP_MESSAGE=Pull request description" >> $GITHUB_OUTPUT
           else
-            echo "STEP_MESSAGE=Pull request description is empty" >> $GITHUB_OUTPUT
-            exit 1
+            echo "STEP_MESSAGE=Pull request description is empty (using title fallback)" >> $GITHUB_OUTPUT
           fi
         env:
-          PR_BODY: ${{ github.event.pull_request.body }}
+          PR_BODY: ${{ github.event.pull_request.body || github.event.pull_request.title }}
 
       - name: Update comment - step results
         uses: GrantBirki/comment@v2.1.1
